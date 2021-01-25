@@ -1,0 +1,13 @@
+batch size = 75
+resolution = 256
+split = 0.9
+epochs = 50
+
+              precision    recall  f1-score   support
+
+          df       0.82      0.87      0.85      2845
+        real       0.91      0.87      0.89      4259
+
+    accuracy                           0.87      7104
+   macro avg       0.87      0.87      0.87      7104
+weighted avg       0.88      0.87      0.87      7104

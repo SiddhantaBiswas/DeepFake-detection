@@ -1,0 +1,33 @@
+============================== TRAINING ============================
+EPOCHS = 100
+BATCH_SIZE = 10
+IMG = 128 x 128
+
+              precision    recall  f1-score   support
+
+        Fake       0.91      0.96      0.93       997
+        Real       0.97      0.94      0.95      1474
+
+    accuracy                           0.94      2471
+   macro avg       0.94      0.95      0.94      2471
+weighted avg       0.95      0.94      0.94      2471
+
+True positive =  955
+False positive =  42
+False negative =  95
+True negative =  1379
+
+============================= TESTING =============================
+              precision    recall  f1-score   support
+
+        Fake       0.78      0.91      0.84      2845
+        Real       0.93      0.83      0.88      4259
+
+    accuracy                           0.86      7104
+   macro avg       0.85      0.87      0.86      7104
+weighted avg       0.87      0.86      0.86      7104
+
+True positive =  2579
+False positive =  266
+False negative =  739
+True negative =  3520

@@ -1,0 +1,22 @@
+Model Name: Meso4
+Batch Size: 64
+Image Size: 256
+Epochs: 50
+Iterations: 7750
+===================================================== 
+
+              precision    recall  f1-score   support
+
+          df       0.94      0.79      0.86      2845
+        real       0.87      0.97      0.92      4259
+
+    accuracy                           0.90      7104
+   macro avg       0.91      0.88      0.89      7104
+weighted avg       0.90      0.90      0.89      7104
+
+True positive = 2253
+False positive = 592
+False negative = 147
+True negative = 4112
+
+Augmentation was done with tensorflow augmentation methods only on the train set. Train and validation sets were generated with image_dataset_from_directory with split 0.2. 80% set from that was passed to augmentation func

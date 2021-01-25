@@ -1,0 +1,22 @@
+============================ TRAINING =================================
+
+True positive =  961
+False positive =  60
+False negative =  48
+True negative =  1402
+
+============================ TESTING ==================================
+
+True positive =  2845
+False positive =  0
+False negative =  4259
+True negative =  0
+
+              precision    recall  f1-score   support
+
+        Fake       0.40      1.00      0.57      2845
+        Real       0.00      0.00      0.00      4259
+
+    accuracy                           0.40      7104
+   macro avg       0.20      0.50      0.29      7104
+weighted avg       0.16      0.40      0.23      7104

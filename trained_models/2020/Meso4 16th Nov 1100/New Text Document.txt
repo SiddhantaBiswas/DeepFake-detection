@@ -1,0 +1,22 @@
+Batch Size = 75
+Epochs = 100
+
+============================== TRAINING ==============================
+
+True positive =  181
+False positive =  816
+False negative =  3
+True negative =  1471
+
+              precision    recall  f1-score   support
+
+        Fake       0.98      0.18      0.31       997
+        Real       0.64      1.00      0.78      1474
+
+    accuracy                           0.67      2471
+   macro avg       0.81      0.59      0.54      2471
+weighted avg       0.78      0.67      0.59      2471
+
+============================== TESTING ================================
+
+acc = 40%

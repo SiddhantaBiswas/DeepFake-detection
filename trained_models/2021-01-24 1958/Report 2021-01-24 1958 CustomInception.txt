@@ -1,0 +1,19 @@
+Model Name: CustomInception
+Batch Size: 64
+Image Size: 100
+Epochs: 50
+===================================================== 
+
+              precision    recall  f1-score   support
+
+          df       0.80      0.93      0.86      2845
+        real       0.94      0.85      0.89      4259
+
+    accuracy                           0.88      7104
+   macro avg       0.87      0.89      0.88      7104
+weighted avg       0.89      0.88      0.88      7104
+
+True positive = 2632
+False positive = 213
+False negative = 646
+True negative = 3613
