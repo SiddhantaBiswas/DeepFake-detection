@@ -1,0 +1,19 @@
+Model Name: multichannel
+Batch Size: 64
+Image Size: 100
+Epochs: 30
+===================================================== 
+
+              precision    recall  f1-score   support
+
+          df       0.84      0.92      0.88      2845
+        real       0.94      0.89      0.91      4259
+
+    accuracy                           0.90      7104
+   macro avg       0.89      0.90      0.90      7104
+weighted avg       0.90      0.90      0.90      7104
+
+True positive = 2604
+False positive = 241
+False negative = 483
+True negative = 3776
