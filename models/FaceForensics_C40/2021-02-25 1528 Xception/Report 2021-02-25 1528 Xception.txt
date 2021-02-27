@@ -1,0 +1,20 @@
+Model Name: XceptionNet
+Batch Size: 64
+Image Size: 100
+Training Epochs: 10
+Tuning Epochs: 30
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake    0.87699   0.75824   0.81330      7983
+        real    0.77981   0.88951   0.83105      7684
+
+    accuracy                        0.82262     15667
+   macro avg    0.82840   0.82387   0.82218     15667
+weighted avg    0.82933   0.82262   0.82201     15667
+
+True positive = 6053
+False positive = 1930
+False negative = 849
+True negative = 6835

@@ -1,0 +1,21 @@
+Model Name: Meso4VGG16
+Batch Size: 64
+Image Size: 224
+Epochs: 50
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake       0.87      0.80      0.84      7983
+        real       0.81      0.88      0.84      7684
+
+    accuracy                           0.84     15667
+   macro avg       0.84      0.84      0.84     15667
+weighted avg       0.84      0.84      0.84     15667
+
+True positive = 6402
+False positive = 1581
+False negative = 933
+True negative = 6751
+
+THE TRAINING VALIDATION GRAPH IS NOT OF THIS CURRENT MODEL. THIS MODEL HAD A HIGHER VALIDATON ACCURACY OF 84%
