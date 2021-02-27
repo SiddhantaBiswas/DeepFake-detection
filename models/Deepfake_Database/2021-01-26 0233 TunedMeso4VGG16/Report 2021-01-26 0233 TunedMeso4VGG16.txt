@@ -1,0 +1,19 @@
+Model Name: TunedMeso4VGG16
+Batch Size: 64
+Image Size: 256
+Epochs: 50
+===================================================== 
+
+              precision    recall  f1-score   support
+
+          df       0.83      0.94      0.89      2845
+        real       0.96      0.88      0.91      4259
+
+    accuracy                           0.90      7104
+   macro avg       0.90      0.91      0.90      7104
+weighted avg       0.91      0.90      0.90      7104
+
+True positive = 2683
+False positive = 162
+False negative = 532
+True negative = 3727

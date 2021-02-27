@@ -1,0 +1,20 @@
+Model Name: Meso4VGG16
+Batch Size: 75
+Image Size: 256
+Epochs: 50
+Iterations: 6600
+===================================================== 
+
+              precision    recall  f1-score   support
+
+          df       0.84      0.88      0.86      2845
+        real       0.92      0.89      0.90      4259
+
+    accuracy                           0.88      7104
+   macro avg       0.88      0.88      0.88      7104
+weighted avg       0.88      0.88      0.88      7104
+
+True positive = 2499
+False positive = 346
+False negative = 486
+True negative = 3773
