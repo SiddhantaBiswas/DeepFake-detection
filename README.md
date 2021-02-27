@@ -1,6 +1,7 @@
 # Methods for detecting Deepfake Images
 #### Author: _Siddhanta Biswas, M.Tech(IT), IIIT Allahabad_
 ***
+<br></br>
 > Datasets Used
 - Deepfake Database
 - FaceForensics++
