@@ -4,7 +4,7 @@
 > Datasets Used
 - Deepfake Database
 - FaceForensics++
-<br>
+<br></br>
 > Problem Statement
 
 Deepfake is a deep learning based technique which aims to replace the face of a targeted
