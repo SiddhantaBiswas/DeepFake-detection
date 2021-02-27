@@ -1,11 +1,10 @@
 # Methods for detecting Deepfake Images
 #### Author: _Siddhanta Biswas, M.Tech(IT), IIIT Allahabad_
-<br>
 ***
 > Datasets Used
 - Deepfake Database
 - FaceForensics++
-***
+<br>
 > Problem Statement
 
 Deepfake is a deep learning based technique which aims to replace the face of a targeted
