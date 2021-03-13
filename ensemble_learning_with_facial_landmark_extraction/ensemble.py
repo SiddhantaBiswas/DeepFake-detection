@@ -20,14 +20,14 @@ import cv2
 
 BATCH_SIZE = 10
 SIZE = 100
-TRAINING_EPOCHS = 5
+TRAINING_EPOCHS = 2
 TUNING_EPOCHS = 15
 
 input_shape = (SIZE, SIZE, 3)
 learning_rate = 0.001
 tuning_learning_rate = 0.00002
 
-directory = os.path.join('test', 'testing')
+directory = r"C:\Users\Siddhanta Biswas\Desktop\Face Detection and Extraction\test\testing"
 image_format = '.jpg'
 
 generator = tf.keras.preprocessing.image.ImageDataGenerator(
@@ -73,20 +73,21 @@ validation_dataset = generator.flow_from_directory(
 # #plot(validation_dataset)
 # =============================================================================
 
+import extract_landmarks
+
 def custom_training_generator(directory=directory, batch_size=BATCH_SIZE):
     while True:
         X1i = training_dataset.next()
+        # X2i = training_dataset.next()
+        eyes, lips, noses = extract_landmarks.process_batch(X1i[0])
         temp = []
-        images = []
         labels = []
-        for img in X1i[0]:
-            img = cv2.resize(img, (SIZE, SIZE))
-            images.append(img)
         for label in X1i[1]:
             labels.append(label)
-        images = np.array(images)
-        images = tf.keras.applications.xception.preprocess_input(images)
-        temp.append(images)
+        eyes = tf.keras.applications.xception.preprocess_input(eyes)
+        lips = tf.keras.applications.xception.preprocess_input(lips)
+        noses = tf.keras.applications.xception.preprocess_input(noses)
+        temp.append(eyes)
         temp.append(np.array(labels))
         X2i = tuple(temp)
         
@@ -94,34 +95,32 @@ def custom_training_generator(directory=directory, batch_size=BATCH_SIZE):
         
 def custom_validation_generator(directory=directory, batch_size=BATCH_SIZE):
     while True:
-        X1i = training_dataset.next()
+        X1i = validation_dataset.next()
+        # X2i = training_dataset.next()
+        eyes, lips, noses = extract_landmarks.process_batch(X1i[0])
         temp = []
-        images = []
         labels = []
-        for img in X1i[0]:
-            img = cv2.resize(img, (SIZE, SIZE))
-            images.append(img)
         for label in X1i[1]:
             labels.append(label)
-        images = np.array(images)
-        images = tf.keras.applications.xception.preprocess_input(images)
-        temp.append(images)
+        eyes = tf.keras.applications.xception.preprocess_input(eyes)
+        lips = tf.keras.applications.xception.preprocess_input(lips)
+        noses = tf.keras.applications.xception.preprocess_input(noses)
+        temp.append(eyes)
         temp.append(np.array(labels))
         X2i = tuple(temp)
         
         yield [X1i[0], X2i[0]], X1i[1]
         
 
-# =============================================================================
 # gen = custom_training_generator(directory)
 # for images, labels in gen:
 #     print(labels[0])
 #     print(labels[1])
 #     break
-# =============================================================================
 
 
      
+#=============================================================================
 def channel(input_shape, inputs):
         x1 = Conv2D(8, (3, 3), padding='same', activation = 'relu')(inputs)
         x1 = BatchNormalization()(x1)
@@ -134,12 +133,12 @@ def channel(input_shape, inputs):
     
 def multichannel():
 
-	# channel 1
+ 	# channel 1
     input1 = Input(shape = (SIZE, SIZE, 3)) 
-    input2 = Input(shape = (SIZE, SIZE, 3))
- 
+    input2 = Input(shape = (300, 100, 3))
+  
     y1 = channel(input_shape, input1)
-    y2 = channel(input_shape, input2)
+    y2 = channel((300,100,3), input2)
 
     # merge
     merged = concatenate([y1, y2])
@@ -154,10 +153,44 @@ def multichannel():
     return model, 'multichannel'
 
 model, modelName = multichannel()
-optimizer = Adam(lr = 0.0001)
+optimizer = Adam(lr = 0.001)
 model.compile(optimizer = optimizer, loss = 'mean_squared_error', metrics = ['accuracy'])
 model.summary()
-print(modelName)
+
+#=============================================================================
+
+def testchannel(inputs):
+        x1 = Conv2D(8, (3, 3), padding='same', activation = 'relu')(inputs)
+        return x1
+
+def testmodel():
+    input1 = Input(shape = (SIZE, SIZE, 3)) 
+    input2 = Input(shape = (300, 100, 3))
+ 
+    y1 = testchannel(input1)
+    y2 = testchannel(input2)
+    
+    # merged = concatenate([y1, y2])
+
+    # dense1 = Dense(16)(merged)
+    # dense1 = LeakyReLU(alpha=0.1)(dense1)
+    # dense1 = Dropout(0.5)(dense1)
+    # outputs = Dense(1, activation='sigmoid')(dense1)
+    # test_model = Model(inputs=[input1, input2], outputs=outputs)
+
+    model = Model(inputs=[input1, input2], outputs=[y1, y2])
+    return model, 'testmodel'
+
+test_model, modelName = testmodel()
+optimizer = Adam(lr = 0.001)
+test_model.compile(optimizer = optimizer, loss = 'mean_squared_error', metrics = ['accuracy'])
+test_model.summary()
+
+#=============================================================================
+
+
+
+#=============================================================================
 
 history = model.fit(custom_training_generator(),
                     epochs=TRAINING_EPOCHS,
@@ -166,3 +199,38 @@ history = model.fit(custom_training_generator(),
                     steps_per_epoch=len(training_dataset),
                     validation_steps=len(validation_dataset),
                     shuffle=True)
+
+#=============================================================================
+
+filters, biases = test_model.layers[2].get_weights()
+op = test_model.predict(custom_validation_generator(), steps=1)
+#print(op[1])
+
+cols = 4
+rows = 4
+for ftr in op[0]:
+    fig = plt.figure(figsize=(7, 7))
+    for i in range(1, 8+1):
+        fig = plt.subplot(rows, cols, i)
+        fig.set_xticks([])
+        fig.set_yticks([])
+        plt.imshow(ftr[:,:,i-1], cmap='gray')
+    plt.show()
+    break
+    
+for ftr in op[1]:
+    fig = plt.figure(figsize=(7, 7))
+    for i in range(1, 8+1):
+        fig = plt.subplot(rows, cols, i)
+        fig.set_xticks([])
+        fig.set_yticks([])
+        plt.imshow(ftr[:,:,i-1], cmap='gray')
+    plt.show()
+    break
+        
+test_model.outputs
+
+
+
+
+

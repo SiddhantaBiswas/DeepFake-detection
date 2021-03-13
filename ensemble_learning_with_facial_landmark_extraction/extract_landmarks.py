@@ -33,7 +33,6 @@ def extractFacialLandmarks(img, points, scale=5, apply_mask=True):
         img = cv2.bitwise_and(img, mask)
     
     bbox = cv2.boundingRect(points)
-    print(points)
     x,y,w,h = bbox
     crop = img[y:y+h, x:x+w]
     crop = cv2.resize(crop, (0,0), None, scale, scale)
@@ -82,33 +81,69 @@ def getLipsPoints(landmarks):
     return points
 
 
-while True:
-    frame = readImage(filename="862_0002.jpg", source="file")
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = detector(gray)
+# =============================================================================
+# while True:
+#     frame = readImage(filename="862_0002.jpg", source="file")
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     faces = detector(gray)
+#     
+#     for face in faces:
+#         # x1 = face.left()
+#         # y1 = face.top()
+#         # x2 = face.right()
+#         # y2 = face.bottom()
+#         # cv2.rectangle(frame, (x1, y1)q, (x2, y2), (0, 255, 0), 3)
+#         
+#         landmarks = predictor(gray, face)
+#         
+#         eyes = extractFacialLandmarks(frame, getEyePoints(landmarks), apply_mask=False)
+#         lips = extractFacialLandmarks(frame, getLipsPoints(landmarks), apply_mask=False)
+#         nose = extractFacialLandmarks(frame, getNosePoints(landmarks), apply_mask=False)
+#         cv2.imshow("Eyes", eyes)
+#         cv2.imshow("Lips", lips)
+#         cv2.imshow("Nose", nose)
+#         cv2.imwrite("eyes.jpg", eyes)
+#         cv2.imwrite("lips.jpg", lips)
+#         cv2.imwrite("nose.jpg", nose)
+#         
+#     #cv2.imshow("Window", frame)
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+#     
+# cap.release()
+# cv2.destroyAllWindows()
+# =============================================================================
+
+
+def process_batch(batch, eye_size=(300, 100), lips_size=(200, 100), nose_size=(100, 200)):
+    extracted_eyes = []
+    extracted_lips = []
+    extracted_nose = []
     
-    for face in faces:
-        # x1 = face.left()
-        # y1 = face.top()
-        # x2 = face.right()
-        # y2 = face.bottom()
-        # cv2.rectangle(frame, (x1, y1)q, (x2, y2), (0, 255, 0), 3)
+    for frame in batch:
+        frame = frame.astype(np.uint8)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = detector(gray)
         
-        landmarks = predictor(gray, face)
-        
-        eyes = extractFacialLandmarks(frame, getEyePoints(landmarks), apply_mask=False)
-        lips = extractFacialLandmarks(frame, getLipsPoints(landmarks), apply_mask=False)
-        nose = extractFacialLandmarks(frame, getNosePoints(landmarks), apply_mask=False)
-        cv2.imshow("Eyes", eyes)
-        cv2.imshow("Lips", lips)
-        cv2.imshow("Nose", nose)
-        cv2.imwrite("eyes.jpg", eyes)
-        cv2.imwrite("lips.jpg", lips)
-        cv2.imwrite("nose.jpg", nose)
-        
-    #cv2.imshow("Window", frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        for face in faces:
+            # x1 = face.left()
+            # y1 = face.top()
+            # x2 = face.right()
+            # y2 = face.bottom()
+            # cv2.rectangle(frame, (x1, y1)q, (x2, y2), (0, 255, 0), 3)
+            
+            landmarks = predictor(gray, face)
+            
+            eyes = extractFacialLandmarks(frame, getEyePoints(landmarks), apply_mask=False)
+            lips = extractFacialLandmarks(frame, getLipsPoints(landmarks), apply_mask=False)
+            nose = extractFacialLandmarks(frame, getNosePoints(landmarks), apply_mask=False)
+            
+            extracted_eyes.append(cv2.resize(eyes, eye_size))
+            extracted_lips.append(cv2.resize(lips, lips_size))
+            extracted_nose.append(cv2.resize(nose, nose_size))
+            
+    extracted_eyes = np.array(extracted_eyes)
+    extracted_lips = np.array(extracted_lips)
+    extracted_nose = np.array(extracted_nose)
     
-cap.release()
-cv2.destroyAllWindows()
+    return extracted_eyes, extracted_lips, extracted_nose
