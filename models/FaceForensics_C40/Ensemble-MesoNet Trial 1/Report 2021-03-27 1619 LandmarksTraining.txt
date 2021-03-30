@@ -1,0 +1,19 @@
+Model Name: LandmarksTraining
+Batch Size: 64
+Training Epochs: 50
+All data below are from EYES prediction only
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake    0.84074   0.87140   0.85580       521
+        real    0.85435   0.82046   0.83706       479
+
+    accuracy                        0.84700      1000
+   macro avg    0.84754   0.84593   0.84643      1000
+weighted avg    0.84726   0.84700   0.84682      1000
+
+True positive = 454
+False positive = 67
+False negative = 86
+True negative = 393
