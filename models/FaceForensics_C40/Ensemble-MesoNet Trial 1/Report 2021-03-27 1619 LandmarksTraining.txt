@@ -1,4 +1,4 @@
-Model Name: LandmarksTraining
+Model Name: MesoNet
 Batch Size: 64
 Training Epochs: 50
 All data below are from EYES prediction only
