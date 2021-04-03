@@ -1,0 +1,24 @@
+Model Name: Ensemble Model
+All data below are results of majority voting with ensemble of 4 CNNs
+
+Prediction done by taking prediction weights in the following manner:
+pred = (2*face_predictions[i] + eyes_predictions[i] + nose_predictions[i] + lips_predictions[i])
+    if pred > 2:
+        predictions.append(1)
+    else:
+        predictions.append(0)
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake    0.89126   0.94835   0.91892       484
+        real    0.94770   0.88998   0.91793       509
+
+    accuracy                        0.91843       993
+   macro avg    0.91948   0.91916   0.91843       993
+weighted avg    0.92019   0.91843   0.91841       993
+
+True positive = 459
+False positive = 25
+False negative = 56
+True negative = 453
