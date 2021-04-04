@@ -1,0 +1,19 @@
+Model Name: Meso4VGG16
+Batch Size: 64
+Training Epochs: 50
+All data below are from EYES prediction only
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake    0.84524   0.87474   0.85974       487
+        real    0.87702   0.84795   0.86224       513
+
+    accuracy                        0.86100      1000
+   macro avg    0.86113   0.86135   0.86099      1000
+weighted avg    0.86154   0.86100   0.86102      1000
+
+True positive = 426
+False positive = 61
+False negative = 78
+True negative = 435
