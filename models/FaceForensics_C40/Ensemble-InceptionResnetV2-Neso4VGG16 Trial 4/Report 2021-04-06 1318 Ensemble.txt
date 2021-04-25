@@ -1,0 +1,17 @@
+Model Name: Ensemble Model
+All data below are results of majority voting with ensemble of 4 CNNs
+===================================================== 
+
+              precision    recall  f1-score   support
+
+        fake    0.93661   0.97240   0.95417       471
+        real    0.97446   0.94118   0.95753       527
+
+    accuracy                        0.95591       998
+   macro avg    0.95553   0.95679   0.95585       998
+weighted avg    0.95659   0.95591   0.95594       998
+
+True positive = 458
+False positive = 13
+False negative = 31
+True negative = 496
